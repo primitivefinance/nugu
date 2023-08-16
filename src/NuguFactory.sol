@@ -9,10 +9,12 @@ contract NuguFactory {
         payable
         returns (address deployed)
     {
+        salt = keccak256(abi.encodePacked(msg.sender, salt));
         deployed = CREATE3.deploy(salt, creationCode, value);
     }
 
-    function getDeployed(bytes32 salt) external view returns (address) {
+    function getDeployed(address deployer, bytes32 salt) external view returns (address) {
+        salt = keccak256(abi.encodePacked(deployer, salt));
         return CREATE3.getDeployed(salt);
     }
 }
