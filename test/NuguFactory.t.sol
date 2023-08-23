@@ -14,27 +14,27 @@ contract NuguFactoryTest is Test {
     }
 
     function test_deploy() public {
-        address dummy = factory.deploy(keccak256("salt"), type(Dummy).creationCode, 0);
+        address dummy = factory.deploy(keccak256("salt"), type(Dummy).creationCode);
         assertEq(dummy.code, type(Dummy).runtimeCode);
     }
 
     function test_getDeployed() public {
         bytes32 salt = keccak256("salt");
-        address dummy = factory.deploy(salt, type(Dummy).creationCode, 0);
+        address dummy = factory.deploy(salt, type(Dummy).creationCode);
         assertEq(dummy, factory.getDeployed(address(this), salt));
     }
 
     function test_RevertIfUsingSaltSame() public {
-        factory.deploy(keccak256("salt"), type(Dummy).creationCode, 0);
+        factory.deploy(keccak256("salt"), type(Dummy).creationCode);
         vm.expectRevert();
-        factory.deploy(keccak256("salt"), type(Dummy).creationCode, 0);
+        factory.deploy(keccak256("salt"), type(Dummy).creationCode);
     }
 
     function test_deploy_senderMatters() public {
         bytes32 salt = keccak256("salt");
-        address dummy1 = factory.deploy(salt, type(Dummy).creationCode, 0);
+        address dummy1 = factory.deploy(salt, type(Dummy).creationCode);
         vm.prank(address(0xbeef));
-        address dummy2 = factory.deploy(salt, type(Dummy).creationCode, 0);
+        address dummy2 = factory.deploy(salt, type(Dummy).creationCode);
         assertNotEq(dummy1, dummy2);
     }
 }
