@@ -6,6 +6,10 @@ import "../src/NuguFactory.sol";
 
 contract Dummy {}
 
+contract DummyPayable {
+    constructor() payable {}
+}
+
 contract NuguFactoryTest is Test {
     NuguFactory factory;
 
@@ -24,7 +28,13 @@ contract NuguFactoryTest is Test {
         assertEq(dummy, factory.getDeployed(address(this), salt));
     }
 
-    function test_RevertIfUsingSaltSame() public {
+    function test_deploy_valueIsForwarded() public {
+        bytes32 salt = keccak256("salt");
+        address dummy = factory.deploy{value: 1 ether}(salt, type(DummyPayable).creationCode);
+        assertEq(address(dummy).balance, 1 ether);
+    }
+
+    function test_RevertIfUsingSameSalt() public {
         factory.deploy(keccak256("salt"), type(Dummy).creationCode);
         vm.expectRevert();
         factory.deploy(keccak256("salt"), type(Dummy).creationCode);
