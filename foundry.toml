@@ -7,3 +7,16 @@ remappings = [
 src = "src"
 
 # See more config options https://github.com/foundry-rs/foundry/tree/master/config
+
+[rpc_endpoints]
+mainnet = "${MAINNET_RPC}"
+base = "${BASE_RPC}"
+arbitrum = "${ARBITRUM_RPC}"
+optimism = "${OPTIMISM_RPC}"
+zkpolygon = "${ZKPOLYGON_RPC}"
+canto = "${CANTO_RPC}"
+base_testnet = "${BASE_TESTNET_RPC}"
+sepolia = "${SEPOLIA_RPC}"
+zkscroll_testnet = "${ZKSCROLL_TESTNET_RPC}"
+optimism_testnet = "${OPTIMISM_TESTNET_RPC}"
+arbitrum_testnet = "${ARBITRUM_TESTNET_RPC}"
